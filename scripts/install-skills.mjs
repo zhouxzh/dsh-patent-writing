@@ -1,12 +1,36 @@
 #!/usr/bin/env node
 import { createHash } from 'node:crypto';
-import { cp, mkdir, readFile, readdir, stat } from 'node:fs/promises';
+import { cp, mkdir, readFile, readdir, rm, stat } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const skillsRoot = resolve(here, '..', 'skills');
+const legacyPatentSkills = [
+  'patent-application',
+  'patent-chapters',
+  'patent-claims',
+  'patent-de-ai',
+  'patent-effect-contrast',
+  'patent-experiment',
+  'patent-figure-design',
+  'patent-init',
+  'patent-loop',
+  'patent-research',
+  'patent-review',
+  'patent-services',
+  'patent-writing-quality'
+];
+
+async function exists(path) {
+  try {
+    await stat(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 async function fileHash(path) {
   try {
@@ -35,6 +59,19 @@ export async function listSkills(root = skillsRoot) {
 export async function installSkills({ target, check = false } = {}) {
   const root = target ? resolve(target) : join(homedir(), '.dsh', 'skills');
   const results = [];
+
+  for (const name of legacyPatentSkills) {
+    const destination = join(root, name);
+    const present = await exists(destination);
+    if (!present) continue;
+    if (check) {
+      results.push({ name, state: 'obsolete' });
+    } else {
+      await rm(destination, { recursive: true, force: true });
+      results.push({ name, state: 'removed' });
+    }
+  }
+
   for (const skill of await listSkills()) {
     const destination = join(root, skill.name);
     const source = await fileHash(join(skill.dir, 'SKILL.md'));

@@ -1,7 +1,7 @@
 {
   "name": "dsh-plugin-patent-writing",
-  "version": "0.1.0",
-  "description": "Self-contained patent-writing skills for DeepSeek Harness: intake, research, disclosure, claims, figures, review, and application drafting.",
+  "version": "0.2.0",
+  "description": "Academic technical-disclosure skill for DeepSeek Harness: research, detailed engineering writing, evidence, figures, review, and Word delivery without claims or patent-application drafting.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -37,7 +37,8 @@
     "dsh-plugin",
     "patent",
     "invention-disclosure",
-    "claims"
+    "academic-writing",
+    "technical-report"
   ],
   "license": "MIT"
 }

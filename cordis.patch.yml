@@ -1,5 +1,6 @@
-# Patent-writing bundle: the host row is intentionally lightweight. The
-# patent procedures are installed as ordinary DSH skills under ~/.dsh/skills.
+# Patent-disclosure bundle: the host row is intentionally lightweight. The
+# academic disclosure procedure is installed as an ordinary DSH skill under
+# ~/.dsh/skills. No claims or patent-application generator is registered.
 - insert:
     - id: dsh-plugin-patent-writing
       name: dsh-plugin-patent-writing
