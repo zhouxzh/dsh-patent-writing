@@ -39,25 +39,45 @@ for (const name of expected) {
 const disclosureRoot = join(root, 'patent-disclosure');
 const disclosure = await readFile(join(disclosureRoot, 'SKILL.md'), 'utf8');
 for (const phrase of [
-  '学术论文或研究技术报告',
-  '公式必须说明变量含义',
-  '算法写清输入',
+  '## 填写前须知',
+  '## 唯一正文模板',
+  '### 一、发明创造的技术方案名称',
+  '### 二、技术方案应用的技术领域',
+  '### 三、背景技术',
+  '### 四、本发明内容',
+  '### 五、本发明技术方案的优点',
+  '### 六、本发明的其他替代方案',
+  '### 七、附图及附图说明',
+  '### 八、具体实施方式',
+  '### 九、主要创新点及代理师重点关注内容',
+  '术语一致性',
+  '完整与可实现',
+  '充分公开',
   '不生成权利要求',
   '正式申请说明书',
   'references/research-and-prior-art.md',
   'references/technical-writing-and-evidence.md',
+  'references/data-model-disclosure.md',
   'references/figures-and-delivery.md',
   'references/review-and-handoff.md'
 ]) {
   if (!disclosure.includes(phrase)) errors.push(`patent-disclosure: missing required guidance: ${phrase}`);
 }
+if (disclosure.includes('学术型技术研究报告') || disclosure.includes('统一16节模板')) {
+  errors.push('patent-disclosure: legacy report or 16-section wording remains');
+}
+if (disclosure.includes('保密等级') || disclosure.includes('保密范围')) {
+  errors.push('patent-disclosure: obsolete confidentiality fields remain');
+}
 
-for (const reference of [
+const references = [
   'research-and-prior-art.md',
   'technical-writing-and-evidence.md',
+  'data-model-disclosure.md',
   'figures-and-delivery.md',
   'review-and-handoff.md'
-]) {
+];
+for (const reference of references) {
   try {
     const text = await readFile(join(disclosureRoot, 'references', reference), 'utf8');
     if (text.length < 500) errors.push(`patent-disclosure/references/${reference}: too short`);
@@ -80,4 +100,4 @@ if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
-console.log(`skill assets: ${expected.length} valid; patent-disclosure references: 4 valid`);
+console.log(`skill assets: ${expected.length} valid; patent-disclosure references: ${references.length} valid`);
