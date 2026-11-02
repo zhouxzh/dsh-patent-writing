@@ -1,0 +1,43 @@
+{
+  "name": "dsh-plugin-patent-writing",
+  "version": "0.1.0",
+  "description": "Self-contained patent-writing skills for DeepSeek Harness: intake, research, disclosure, claims, figures, review, and application drafting.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "scripts",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "skills:install": "node scripts/install-skills.mjs",
+    "skills:check": "node scripts/install-skills.mjs --check",
+    "test": "node scripts/check-skills.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "patent",
+    "invention-disclosure",
+    "claims"
+  ],
+  "license": "MIT"
+}

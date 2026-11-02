@@ -1,0 +1,5 @@
+# Patent-writing bundle: the host row is intentionally lightweight. The
+# patent procedures are installed as ordinary DSH skills under ~/.dsh/skills.
+- insert:
+    - id: dsh-plugin-patent-writing
+      name: dsh-plugin-patent-writing
